@@ -99,19 +99,20 @@ button {
 }
 
 .main-container {
-  width: 95%;
-  max-width: 1200px;
-  height: 85vh;
+  width: 100%;
+  max-width: none;
+  height: 100vh;
+  height: 100dvh;
   min-height: 690px;
   display: flex;
   position: relative;
   overflow: hidden;
-  border-radius: 48px;
+  border-radius: 0;
   background: var(--bg-glass);
   backdrop-filter: blur(25px);
   -webkit-backdrop-filter: blur(25px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.15);
+  border: 0;
+  box-shadow: none;
 }
 
 .bg-gradient,
@@ -547,7 +548,7 @@ button {
 
 @media (max-width: 1120px) {
   .main-container {
-    width: calc(100% - 32px);
+    width: 100%;
     min-height: 640px;
   }
 
