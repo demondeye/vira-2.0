@@ -204,6 +204,28 @@ button {
   object-fit: cover;
 }
 
+.account-entry {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--text-main);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.account-entry span {
+  display: none;
+}
+
+.account-entry strong {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+
 .hero-section {
   flex: 1;
   padding: 120px 60px 40px 40px;
@@ -528,6 +550,240 @@ button {
   height: 10px;
 }
 
+.auth-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 25% 20%, rgba(226, 236, 255, 0.72), transparent 38%),
+    radial-gradient(circle at 75% 80%, rgba(229, 218, 255, 0.78), transparent 42%),
+    rgba(246, 248, 252, 0.72);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.auth-scene {
+  width: min(452px, 100%);
+  min-height: 588px;
+  perspective: 1400px;
+}
+
+.auth-card {
+  position: relative;
+  width: 100%;
+  min-height: 588px;
+  transform-style: preserve-3d;
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.auth-card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.auth-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 34px 26px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 20px 50px rgba(35, 45, 70, 0.18);
+  color: #080b14;
+  overflow: hidden;
+  backface-visibility: hidden;
+}
+
+.auth-face-back {
+  transform: rotateY(180deg);
+}
+
+.auth-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(238, 242, 247, 0.85);
+  color: #64748b;
+  cursor: pointer;
+}
+
+.auth-face h2 {
+  margin: 0 0 8px;
+  color: #080b14;
+  font-size: 28px;
+  line-height: 1.1;
+  letter-spacing: -0.7px;
+}
+
+.auth-subtitle {
+  margin: 0 0 28px;
+  color: #64748b;
+  font-size: 15px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.signup-form {
+  gap: 14px;
+}
+
+.auth-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #111827;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.auth-input-shell {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  border: 1px solid #d9e1ea;
+  border-radius: 9px;
+  background: rgba(248, 250, 252, 0.86);
+  color: #64748b;
+  box-shadow: inset 0 0 0 1px transparent;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.auth-input-shell:focus-within {
+  border-color: #2f6bea;
+  box-shadow: 0 0 0 3px rgba(47, 107, 234, 0.16);
+}
+
+.auth-input-shell input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #111827;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.auth-input-action {
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.forgot-link {
+  align-self: flex-end;
+  margin-top: -14px;
+  color: #1d63c7;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.primary-auth-btn {
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 6px;
+  border-radius: 28px;
+  background: #2f67e8;
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(47, 103, 232, 0.28);
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 28px 0 24px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: #e5e7eb;
+}
+
+.social-auth-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.social-auth-row button {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.75);
+  color: #0f172a;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.google-mark {
+  color: #1a73e8;
+  font-weight: 800;
+}
+
+.apple-mark {
+  width: 16px;
+  height: 18px;
+  display: inline-block;
+  border-radius: 55% 55% 45% 45%;
+  background: #050505;
+}
+
+.auth-switch-copy {
+  margin: auto 0 0;
+  color: #64748b;
+  text-align: center;
+  font-size: 15px;
+}
+
+.auth-switch-copy button {
+  color: #1d63c7;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 @media (max-height: 800px) {
   .main-container {
     min-height: 610px;
@@ -765,7 +1021,8 @@ button {
   }
 
   .nav-icon,
-  .icon-btn {
+  .icon-btn,
+  .account-entry {
     width: 36px;
     height: 36px;
   }
@@ -773,6 +1030,12 @@ button {
   .profile-avatar {
     width: 34px;
     height: 34px;
+  }
+
+  .account-entry {
+    width: 48px;
+    height: 34px;
+    font-size: 9px;
   }
 
   .hero-section {
@@ -872,10 +1135,45 @@ button {
     height: 30px;
   }
 
+  .auth-modal {
+    padding: 16px;
+  }
+
+  .auth-scene,
+  .auth-card {
+    min-height: 680px;
+  }
+
+  .auth-face {
+    padding: 28px;
+  }
+
+  .auth-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
   .swipe-btn {
     right: 18px;
     bottom: 16px;
     padding: 10px 18px;
+  }
+
+  .auth-modal {
+    padding: 18px;
+  }
+
+  .auth-scene {
+    max-width: 100%;
+    min-height: 660px;
+  }
+
+  .auth-face {
+    padding: 28px 24px;
+  }
+
+  .auth-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -900,6 +1198,11 @@ button {
     height: 32px;
   }
 
+  .account-entry {
+    width: 44px;
+    height: 32px;
+  }
+
   .hero-section {
     gap: 18px;
     padding: 16px;
@@ -912,5 +1215,17 @@ button {
   .info-card,
   .event-card {
     padding: 22px;
+  }
+
+  .auth-scene {
+    min-height: 700px;
+  }
+
+  .auth-face {
+    padding: 26px 20px;
+  }
+
+  .social-auth-row {
+    grid-template-columns: 1fr;
   }
 }

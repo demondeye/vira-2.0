@@ -140,6 +140,27 @@ function Icon({ name, className, size = 20 }) {
           <path d="m4.8 6.2 4.4-2.3M4.8 7.8l4.4 2.3" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.4" />
         </svg>
       );
+    case "mail":
+      return (
+        <svg {...commonProps}>
+          <rect x="2.6" y="4.4" width="14.8" height="11.2" rx="2" fill="none" stroke="currentColor" strokeWidth="1.6" />
+          <path d="m3.6 6 6.4 4.5L16.4 6" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.6" />
+        </svg>
+      );
+    case "lock":
+      return (
+        <svg {...commonProps}>
+          <rect x="4.4" y="8.4" width="11.2" height="8.1" rx="1.6" fill="none" stroke="currentColor" strokeWidth="1.6" />
+          <path d="M6.8 8.4V6.3a3.2 3.2 0 0 1 6.4 0v2.1" fill="none" stroke="currentColor" strokeLinecap="round" strokeWidth="1.6" />
+        </svg>
+      );
+    case "eye":
+      return (
+        <svg {...commonProps}>
+          <path d="M2.6 10s2.5-4.4 7.4-4.4 7.4 4.4 7.4 4.4-2.5 4.4-7.4 4.4S2.6 10 2.6 10Z" fill="none" stroke="currentColor" strokeLinejoin="round" strokeWidth="1.5" />
+          <circle cx="10" cy="10" r="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+      );
     case "logo":
       return (
         <svg {...commonProps} viewBox="0 0 24 24" width={40} height={40}>
@@ -154,7 +175,7 @@ function Icon({ name, className, size = 20 }) {
   }
 }
 
-function Sidebar() {
+function Sidebar({ isSignedIn, onOpenAuth }) {
   const [activeNav, setActiveNav] = useState("Home");
 
   return (
@@ -175,7 +196,14 @@ function Sidebar() {
       </nav>
 
       <div className="nav-items nav-items-bottom">
-        <img className="profile-avatar" src="https://i.pravatar.cc/100?img=32" alt="Athlete profile" />
+        {isSignedIn ? (
+          <img className="profile-avatar" src="https://i.pravatar.cc/100?img=32" alt="Athlete profile" />
+        ) : (
+          <button className="account-entry" type="button" aria-label="Open sign in" onClick={onOpenAuth}>
+            <span>Sign</span>
+            <strong>in</strong>
+          </button>
+        )}
         <button
           className={`nav-icon${activeNav === "Notifications" ? " active" : ""}`}
           type="button"
@@ -187,6 +215,113 @@ function Sidebar() {
         </button>
       </div>
     </aside>
+  );
+}
+
+function AuthField({ icon, label, type = "text", placeholder, autoComplete }) {
+  return (
+    <label className="auth-field">
+      <span>{label}</span>
+      <div className="auth-input-shell">
+        {icon ? <Icon name={icon} size={18} /> : null}
+        <input type={type} placeholder={placeholder} autoComplete={autoComplete} />
+      </div>
+    </label>
+  );
+}
+
+function AuthCard({ mode, onModeChange, onClose }) {
+  const isSignUp = mode === "signup";
+
+  return (
+    <div className="auth-modal" role="presentation" onMouseDown={onClose}>
+      <div className="auth-scene" role="dialog" aria-modal="true" aria-label={isSignUp ? "Create account" : "Sign in"} onMouseDown={(event) => event.stopPropagation()}>
+        <div className={`auth-card${isSignUp ? " is-flipped" : ""}`}>
+          <section className="auth-face auth-face-front" aria-hidden={isSignUp}>
+            <button className="auth-close" type="button" aria-label="Close sign in" onClick={onClose}>
+              x
+            </button>
+            <h2>Welcome back</h2>
+            <p className="auth-subtitle">Enter your credentials to access your account</p>
+
+            <form className="auth-form" onSubmit={(event) => event.preventDefault()}>
+              <AuthField icon="mail" label="Email" type="email" placeholder="name@example.com" autoComplete="email" />
+
+              <label className="auth-field">
+                <span>Password</span>
+                <div className="auth-input-shell">
+                  <Icon name="lock" size={18} />
+                  <input type="password" placeholder="Password" autoComplete="current-password" />
+                  <button className="auth-input-action" type="button" aria-label="Show password">
+                    <Icon name="eye" size={18} />
+                  </button>
+                </div>
+              </label>
+
+              <button className="forgot-link" type="button">
+                Forgot password?
+              </button>
+
+              <button className="primary-auth-btn" type="submit">
+                Sign in <Icon name="arrow" size={22} />
+              </button>
+            </form>
+
+            <div className="auth-divider">
+              <span>OR CONTINUE WITH</span>
+            </div>
+
+            <div className="social-auth-row">
+              <button type="button">
+                <span className="google-mark">G</span>
+                Google
+              </button>
+              <button type="button">
+                <span className="apple-mark">Apple</span>
+                Apple
+              </button>
+            </div>
+
+            <p className="auth-switch-copy">
+              Don&apos;t have an account?{" "}
+              <button type="button" onClick={() => onModeChange("signup")}>
+                Sign up
+              </button>
+            </p>
+          </section>
+
+          <section className="auth-face auth-face-back" aria-hidden={!isSignUp}>
+            <button className="auth-close" type="button" aria-label="Close sign up" onClick={onClose}>
+              x
+            </button>
+            <h2>Create account</h2>
+            <p className="auth-subtitle">Tell us about the skater joining VIRA</p>
+
+            <form className="auth-form signup-form" onSubmit={(event) => event.preventDefault()}>
+              <div className="auth-grid">
+                <AuthField label="First name" placeholder="Ari" autoComplete="given-name" />
+                <AuthField label="Last name" placeholder="Chen" autoComplete="family-name" />
+              </div>
+              <AuthField label="Date of birth" type="date" autoComplete="bday" />
+              <AuthField label="Current home address" placeholder="123 Arena Way, Montreal, QC" autoComplete="street-address" />
+              <AuthField icon="mail" label="Contact email" type="email" placeholder="name@example.com" autoComplete="email" />
+              <AuthField label="Registered club" placeholder="Montreal Speed Skating Club" autoComplete="organization" />
+
+              <button className="primary-auth-btn" type="submit">
+                Create profile <Icon name="arrow" size={22} />
+              </button>
+            </form>
+
+            <p className="auth-switch-copy">
+              Already registered?{" "}
+              <button type="button" onClick={() => onModeChange("signin")}>
+                Sign in
+              </button>
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -292,6 +427,15 @@ function EventCard() {
 }
 
 function App() {
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [authMode, setAuthMode] = useState("signin");
+  const isSignedIn = false;
+
+  function openAuth(mode = "signin") {
+    setAuthMode(mode);
+    setIsAuthOpen(true);
+  }
+
   return (
     <>
       <div className="top-label">ORIZON DESIGN</div>
@@ -301,7 +445,7 @@ function App() {
         <div className="bg-gradient" aria-hidden="true"></div>
         <div className="glass-overlay" aria-hidden="true"></div>
 
-        <Sidebar />
+        <Sidebar isSignedIn={isSignedIn} onOpenAuth={() => openAuth("signin")} />
 
         <main className="hero-section">
           <HeaderNav />
@@ -328,6 +472,10 @@ function App() {
       <button className="swipe-btn" type="button">
         Swipe »
       </button>
+
+      {isAuthOpen ? (
+        <AuthCard mode={authMode} onModeChange={setAuthMode} onClose={() => setIsAuthOpen(false)} />
+      ) : null}
     </>
   );
 }
