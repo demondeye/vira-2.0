@@ -1,0 +1,14 @@
+{
+  "name": "vira-landing-page",
+  "version": "1.0.0",
+  "description": "Node-served VIRA glassmorphic short track landing page.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check script.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
